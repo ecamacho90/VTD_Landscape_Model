@@ -39,7 +39,7 @@ solutionorfates = 1; % 1 if the solution is the end point of the trajectories, 0
 ExpConditions = {'NoChir','Chir23','Chir25','Chir25FGF23','Chir25FGF25',... %used to choose inital parameters
                 'Chir225','Chir235','Chir24','Chir25FGF235','Chir25FGF24','Chir25FGF245'}; %Remaining conditions with data
 
-sol = zeros(2,7,500);
+sol = zeros(2,7,ModelParam.nsimulations);
 
 for Expidx=1:numel(ExpConditions)
     EC=ExpConditions{Expidx};

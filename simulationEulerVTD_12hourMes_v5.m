@@ -20,7 +20,7 @@ function sol=simulationEulerVTD_12hourMes_v5(solutionorfates)
 
 global ModelParam
 
-modeleq=str2func(ModelParam.modelName);
+modeleq=str2func(ModelParam.modelName); 
 
 if solutionorfates
     simulateddata=zeros(2,ModelParam.tF/12+1, ModelParam.nsimulations);

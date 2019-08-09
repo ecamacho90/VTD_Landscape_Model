@@ -32,7 +32,7 @@ function [fates,Colors] = computefates_GaussMix(Xsol)
         fates(:,i) = cluster(gmfit, squeeze(Xsol(:,i,:))');
     end
 
-    Colors = zeros(samples, times, 3);
+    Colors = zeros(samples, times, 3); %This is dispensable for the MCMC 
     for i=1:times
         for j=1:samples
             switch fates(j,i)

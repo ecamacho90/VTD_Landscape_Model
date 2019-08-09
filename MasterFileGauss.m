@@ -39,14 +39,16 @@ solutionorfates = 1; % 1 if the solution is the end point of the trajectories, 0
 ExpConditions = {'NoChir','Chir23','Chir25','Chir25FGF23','Chir25FGF25',... %used to choose inital parameters
                 'Chir225','Chir235','Chir24','Chir25FGF235','Chir25FGF24','Chir25FGF245'}; %Remaining conditions with data
 
-sol = zeros(2,7,500*numel(ExpConditions));
+nsim = ModelParam.nsimulations;
+
+sol = zeros(2,7,nsim*numel(ExpConditions));
 
 for Expidx=1:numel(ExpConditions)
     EC=ExpConditions{Expidx};
     str=['SetModelParam_',EC];%Set condition specific parameters
     h=str2func(str);
     h();
-    sol(:,:,1+500*(Expidx-1):500*Expidx) = simulationEulerVTD_12hourMes_v5(solutionorfates);
+    sol(:,:,1+nsim*(Expidx-1):nsim*Expidx) = simulationEulerVTD_12hourMes_v5(solutionorfates);
 end
 [fates,Colors] = computefates_GaussMix(sol); %6 fates considered being one cells in transition
 for Expidx=1:numel(ExpConditions)
@@ -57,7 +59,7 @@ for Expidx=1:numel(ExpConditions)
     for i=1:7
         subplot(3,3,i);
         hold on;
-        scatter(squeeze(sol(1,i,1+500*(Expidx-1):500*Expidx)), squeeze(sol(2,i,1+500*(Expidx-1):500*Expidx)),10,squeeze(Colors(1+500*(Expidx-1):500*Expidx,i,:)));
+        scatter(squeeze(sol(1,i,1+nsim*(Expidx-1):500*Expidx)), squeeze(sol(2,i,1+nsim*(Expidx-1):nsim*Expidx)),10,squeeze(Colors(1+nsim*(Expidx-1):nsim*Expidx,i,:)));
         title(['t= ', num2str((i-1)*12)]);
         xlim([-12,5]);
         ylim([-6,7]);
