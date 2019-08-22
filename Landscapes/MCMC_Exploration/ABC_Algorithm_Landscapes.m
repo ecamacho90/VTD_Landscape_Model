@@ -22,9 +22,9 @@ MaxStep = 1.e6;
 
 %Set the random number generator:
 %--------------------------------
-% rng(13)
+rng(13)
 % rng(14)
-rng(15)
+% rng(15)
 
 
 %Number of particles:
