@@ -8,7 +8,8 @@ if paramnumber==1
     elseif CaseLandscape == 2
         pvalue = -random('Gamma',10,0.9);
     elseif CaseLandscape == 3
-        pvalue = -random('Gamma',10,0.9);
+%         pvalue = -random('Gamma',10,0.9);
+          pvalue = -random('Gamma',11.6,0.6); %From fitting Case 3
     elseif CaseLandscape == 4
         pvalue = -random('Gamma',8,0.5);
     end
@@ -22,8 +23,9 @@ elseif paramnumber==2
     elseif CaseLandscape == 2
         pvalue = -random('Gamma',8.1,1.1);
     elseif CaseLandscape == 3
-        pvalue = -random('Gamma',3.5,1.5);
-    elseif CaseLandscape == 4
+%         pvalue = -random('Gamma',3.5,1.5);
+        pvalue = -random('Gamma',4.8,0.7); %From fitting Case 3
+    elseif CaseLandscape == 4 
         pvalue = -random('Gamma',36,0.35);
     end
 
@@ -34,7 +36,8 @@ elseif paramnumber==3
     elseif CaseLandscape == 2
     pvalue = -random('Gamma',3,1.5);
     elseif CaseLandscape == 3
-    pvalue = -random('Gamma',2,2);
+%     pvalue = -random('Gamma',2,2);
+        pvalue = -random('Gamma',2.4,1.2); %From fitting Case 3
     elseif CaseLandscape == 4
     pvalue = random('Normal',0,3);
     end
@@ -48,8 +51,9 @@ elseif paramnumber==4
         pvalue = -random('Uniform',0,50);
     elseif CaseLandscape == 3
         %pvalue = -random('Uniform',0,50);
-        pvalue = -random('Uniform',40,80);
+%         pvalue = -random('Uniform',40,80);
         %pvalue = random('Gamma',2,6)-50;
+        pvalue = random('Gamma',1.22,6.7); %From fitting Case 3
     elseif CaseLandscape == 4
         %pvalue = -random('Uniform',0,50);
         pvalue = -random('Gamma',2,10);
@@ -64,8 +68,9 @@ elseif paramnumber==5
         pvalue = random('Uniform',0,50);
     elseif CaseLandscape == 3
         %pvalue = random('Uniform',-30,30);
-        pvalue = random('Gamma',2.5,5)-20; %%70%
+%         pvalue = random('Gamma',2.5,5)-20; %%70%
         %pvalue = random('Normal',0,15);
+        pvalue = random('Gamma',2.4,9.7)-30; %From fitting Case 3
     elseif CaseLandscape == 4
         %pvalue = -random('Uniform',0,50);
         pvalue = -random('Gamma',4,5)+15;

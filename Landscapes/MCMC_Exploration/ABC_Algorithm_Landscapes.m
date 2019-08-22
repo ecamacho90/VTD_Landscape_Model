@@ -22,11 +22,14 @@ MaxStep = 1.e6;
 
 %Set the random number generator:
 %--------------------------------
-rng(13)
+% rng(13)
+% rng(14)
+rng(15)
+
 
 %Number of particles:
 %--------------------
-Nparticles=1000;
+Nparticles=500;
 
 %Parameters:
 %-----------
@@ -106,6 +109,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
     %New cell in the particles matrix:
     %---------------------------------
     NewData = [];
+    CritPointMatrix = [];
 
     %Find the particles:
     %-------------------
@@ -165,7 +169,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
         [critpointsx,critpointsy] = feval(criticalpointshandle,paramaux,x,y);
   
         %Check that the lanscape has the desired number of critical points
-        priorOK = feval(checkcriticalpointshandle,critpointsx,critpointsy,CaseLandscape);
+        [priorOK,critpoints] = feval(checkcriticalpointshandle,critpointsx,critpointsy,CaseLandscape);
         
 
 
@@ -178,7 +182,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
                 
                 %Save the data in the matrix:    
                 NewData = [NewData; paramaux];
-                    
+                CritPointsMatrix(:,:,N) = critpoints;  
                 
             end
                
@@ -189,7 +193,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
     
     
   
-save(['LandscapesFound_Case',num2str(CaseLandscape)])
+save(['LandscapesFound_Case',num2str(CaseLandscape),'_500_2'])
 
     
     
