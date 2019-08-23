@@ -72,6 +72,9 @@ elseif paramnumber==4
             parameterOK=0;
         end
     elseif CaseLandscape == 3
+        if paramvalue>=0 %Meri: This condition was missing. Needed to get the two attractors we want
+            parameterOK=0;
+        end
         
     elseif CaseLandscape == 4
         if paramvalue>=0
@@ -92,9 +95,9 @@ elseif paramnumber==5
     elseif CaseLandscape == 3
        
     elseif CaseLandscape == 4
-        if paramvalue>=0
-            parameterOK=0;
-        end
+%         if paramvalue>=0
+%             parameterOK=0;
+%         end
     end
 
 end
