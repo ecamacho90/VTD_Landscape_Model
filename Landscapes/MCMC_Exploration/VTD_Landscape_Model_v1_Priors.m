@@ -39,7 +39,8 @@ elseif paramnumber==3
 %     pvalue = -random('Gamma',2,2);
         pvalue = -random('Gamma',2.4,1.2); %From fitting Case 3
     elseif CaseLandscape == 4
-    pvalue = random('Normal',0,3);
+%     pvalue = random('Normal',0,3);
+        pvalue = random('Normal',-1,2.8);
     end
     
 elseif paramnumber==4   
@@ -55,8 +56,8 @@ elseif paramnumber==4
         %pvalue = random('Gamma',2,6)-50;
         pvalue = random('Gamma',1.22,6.7); %From fitting Case 3
     elseif CaseLandscape == 4
-        pvalue = -random('Uniform',0,50);
-%         pvalue = -random('Gamma',2,10);
+%         pvalue = -random('Uniform',0,50);
+        pvalue = -random('Gamma',1.5,12.9);
     end
         
 elseif paramnumber==5   
@@ -72,8 +73,9 @@ elseif paramnumber==5
         %pvalue = random('Normal',0,15);
         pvalue = random('Gamma',2.4,9.7)-30; %From fitting Case 3
     elseif CaseLandscape == 4
-        pvalue = -random('Uniform',0,50);
+%         pvalue = -random('Uniform',0,50);
 %         pvalue = -random('Gamma',4,5)+15;
+        pvalue = -random('Gamma',1.55,11.9);
     end
 
 end
