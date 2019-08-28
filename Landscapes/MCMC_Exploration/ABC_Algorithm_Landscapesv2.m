@@ -1,4 +1,4 @@
-function ABC_Algorithm_Landscapes(CaseLandscape)
+function ABC_Algorithm_Landscapesv2(CaseLandscape)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,20 +22,11 @@ MaxStep = 1.e6;
 
 %Set the random number generator:
 %--------------------------------
-
 rng(13)
-% rng(13)
-rng(14)
-% rng(15)
 
 %Number of particles:
 %--------------------
-Nparticles=100;
-
-
-%Number of particles:
-%--------------------
-Nparticles=500;
+Nparticles=1000;
 
 %Parameters:
 %-----------
@@ -50,7 +41,7 @@ syms x y
 
 %Parameters to fit:
 %------------------
-parfitnumbers = 1:5;
+parfitnumbers = [1,2,4,5];%1:5;
 
 %Number of parameters to fit:
 nparfit = length(parfitnumbers);
@@ -65,6 +56,7 @@ initpar = [-8,-3,-4.5,-36,-12];
 elseif CaseLandscape==4
 initpar = [-4,-12,3.5,-24,-8];    
 end
+initpar(3)=-3;
 
 %Model name:
 model = 'VTD_Landscape_Model_v1';
@@ -94,7 +86,7 @@ relationsconstraintshandle1 = str2func(strcat(model,'_Relations_Constraints1'));
 criticalpointshandle = str2func(strcat(model,'_CriticalPoints'));
 
 %Check critical points:
-checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
+checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPointsv2'));
 
 
 
@@ -114,14 +106,13 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
     
     %New cell in the particles matrix:
     %---------------------------------
-    NewData = [];
-    CritPointMatrix = [];
+    NewData = zeros(1000,5);
 
     %Find the particles:
     %-------------------
     while (N<Nparticles)&&(i<MaxStep)
 
-        if rem(i,10)==0
+        if rem(i,100)==0
             disp('---------------------------------------------------')
             disp('---------------------------------------------------')
             disp(strcat('            Step: ',num2str(i)));
@@ -175,8 +166,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
         [critpointsx,critpointsy] = feval(criticalpointshandle,paramaux,x,y);
   
         %Check that the lanscape has the desired number of critical points
-        priorOK = feval(checkcriticalpointshandle,critpointsx,critpointsy,CaseLandscape);
-        [priorOK,critpoints] = feval(checkcriticalpointshandle,critpointsx,critpointsy,CaseLandscape);
+        priorOK = feval(checkcriticalpointshandle,critpointsx,critpointsy,CaseLandscape,paramaux);
         
 
 
@@ -188,9 +178,10 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
                 N = N+1;
                 
                 %Save the data in the matrix:    
-                NewData = [NewData; paramaux];
+                %NewData = [NewData; paramaux];
+                NewData(N,:) = paramaux;
+                
                     
-                CritPointsMatrix(:,:,N) = critpoints;  
                 
             end
                
@@ -201,8 +192,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
     
     
   
-%save(['LandscapesFound_Case',num2str(CaseLandscape)])
-save(['LandscapesFound_Case',num2str(CaseLandscape),'_500_2'])
+save(['LandscapesFound_Case',num2str(CaseLandscape)])
 
     
     

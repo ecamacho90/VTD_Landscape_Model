@@ -1,10 +1,17 @@
-function priorOK=VTD_Landscape_Model_v1_CheckCriticalPoints(critpointsx,critpointsy,CaseLandscape)
+
+function [priorOK,critpoints]=VTD_Landscape_Model_v1_CheckCriticalPoints(critpointsx,critpointsy,CaseLandscape)
+
 
 %We can check the quadrants here too if wanted
 
 priorOK=0;
-vector = find(sum(abs(imag(vpa([critpointsx,critpointsy]))),2)==0);
+
+critpoints=[];
+critpointsrewritten = vpa([critpointsx,critpointsy]);
+vector = find(sum(abs(imag(critpointsrewritten)),2)==0);
+
 nrealcriticpoints = length(vector);
+
 
 if CaseLandscape==1
     if nrealcriticpoints == 7
@@ -25,6 +32,22 @@ elseif CaseLandscape==4
 
     if nrealcriticpoints == 3
         priorOK=1;
+        if length(find(critpointsrewritten(vector,1)>=0))==3
+        priorOK=1;
+        critpoints = critpointsrewritten(vector);
+        end
+    end
+  
+elseif CaseLandscape==4
+    if nrealcriticpoints == 3
+        condition1 = find(critpointsrewritten(vector,1).*critpointsrewritten(vector,2)>=0);
+        if sum(condition1>=2)
+            condition2 = length(find(critpointsrewritten(condition1,1)>0));
+            condition3 = length(find(critpointsrewritten(condition1,1)<0));
+            if (condition2>=1)&&(condition3>=1)
+            priorOK=1;
+            end
+        end
     end
 
     
