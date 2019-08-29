@@ -95,11 +95,8 @@ elseif paramnumber==5
     elseif CaseLandscape == 3
        
     elseif CaseLandscape == 4
-        if paramvalue>=0
-            parameterOK=0;
-        end
 %         if paramvalue>=0
-%             parameterOK=0;
+%             parameterOK=0;%Meri: Not necessarily true. Some positive values work fine
 %         end
     end
 

@@ -192,7 +192,7 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPointsv2'));
     
     
   
-save(['LandscapesFound_Case',num2str(CaseLandscape)])
+save(['LandscapesFound_Case',num2str(CaseLandscape),'M'])
 
     
     
