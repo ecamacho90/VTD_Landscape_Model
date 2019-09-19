@@ -1,4 +1,4 @@
-function [dydt,ChirTime]=VTD_landscape_model_v6(t,y,p,dt, ChirTime)
+function [dydt,ChirTime]=VTD_landscape_model_v7(t,y,p,dt, ChirTime)
 
 
 %%Sixth version of the landscape model for Vertebrate Trunk Development.

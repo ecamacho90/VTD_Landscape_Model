@@ -24,7 +24,7 @@ function [fates,Colors] = computefates_GaussMix(Xsol)
    % DA_PlotCombined1DHist(Data, 1:2, 1:NumClust, 0, clusterX, {'x','y'}, 100, 0, [], 'All', '', '', [1,3,9,7,5], gmfit);
 
     %%Plot 2D contour curves
-    DA_PlotCombined2DHist(Data, 1, 1:2, 1:NumClust, 0,  clusterX, {'x','y'}, 100, 0, [], 'All', [], '', [1,3,7,9,5,11]);
+%     DA_PlotCombined2DHist(Data, 1, 1:2, 1:NumClust, 0,  clusterX, {'x','y'}, 100, 0, [], 'All', [], '', [1,3,7,9,5,11]);
 
     %% Assign fates
     fates = zeros(samples,times);

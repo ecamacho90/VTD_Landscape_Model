@@ -50,12 +50,13 @@ for Expidx=1:numel(ExpConditions)
     h();
     sol(:,:,1+nsim*(Expidx-1):nsim*Expidx) = simulationEulerVTD_12hourMes_v5(solutionorfates);
 end
+%%
 [fates,Colors] = computefates_GaussMix(sol); %6 fates considered being one cells in transition
 for Expidx=1:numel(ExpConditions)
     EC=ExpConditions{Expidx};
     
     figure;%Plot trajectories at fixed time points
-    sgtitle(EC)
+    title(EC)
     for i=1:7
         subplot(3,3,i);
         hold on;
@@ -71,7 +72,7 @@ for Expidx=1:numel(ExpConditions)
     end
 
     figure;
-    sgtitle([EC,' Proportions']);
+    title([EC,' Proportions']);
     colorMatWithValsG(proportions);
     set(gca,'yticklabel',[2,2.5,3,3.5,4,4.5,5]);
 
