@@ -10,8 +10,8 @@ if mutantnumber == 1        %NoC_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  0      1   paramsimulations; ...
-                       0    0.9   paramsimulations];
+    pMediaChanges = [  0      1   paramsimulations(3:end); ...
+                       0    0.9   paramsimulations(3:end)]; %Replace first two elements of vector
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];                          
 
@@ -31,8 +31,8 @@ elseif mutantnumber == 2    %C23_180814
     nMediaChanges = length(tMediaChanges)-1;
     
 %                     WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations; ...
-                       0    0.9   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end); ...
+                       0    0.9   paramsimulations(3:end)];
                  
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];                          
 
@@ -47,9 +47,9 @@ elseif mutantnumber == 3    %C24_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations; ...
-                       1    0.9   paramsimulations; ...
-                       0    0.9   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end); ...
+                       1    0.9   paramsimulations(3:end); ...
+                       0    0.9   paramsimulations(3:end)];
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];       
     
@@ -64,8 +64,8 @@ elseif mutantnumber == 4    %C25_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations; ...
-                       1    0.9   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end); ...
+                       1    0.9   paramsimulations(3:end)];
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];       
     
@@ -80,8 +80,8 @@ elseif mutantnumber == 5    %C25_F23_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations; ...
-                       1      0   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end); ...
+                       1      0   paramsimulations(3:end)];
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];       
     
@@ -96,8 +96,8 @@ elseif mutantnumber == 6    %C25_F24_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations; ...
-                       1      0   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end); ...
+                       1      0   paramsimulations(3:end)];
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];       
     
@@ -112,7 +112,7 @@ elseif mutantnumber == 7    %C25_F25_180814
     nMediaChanges = length(tMediaChanges)-1;
 
     %                 WNT    FGF  
-    pMediaChanges = [  1      1   paramsimulations];
+    pMediaChanges = [  1      1   paramsimulations(3:end)];
 
     Mmediachanges = [0; cumsum((tMediaChanges(2:end) - tMediaChanges(1:end-1))/dt)];       
     

@@ -278,13 +278,14 @@ if T==0
             NoiseX = randn(M,nsimulations)*sqrt(2*paramaux(end)*dt); 
             NoiseY = randn(M,nsimulations)*sqrt(2*paramaux(end)*dt); 
             
-%             hold on
-%             scatter(InitialCondition(1,:),InitialCondition(2,:))
+            figure('WindowStyle','docked');
+            hold on
+            scatter(InitialCondition(1,:),InitialCondition(2,:))
             
             size([NoiseX;NoiseY])
             paramsimulations = paramaux
             
-            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);
+            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
             
             [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
@@ -449,7 +450,7 @@ if (T>0)&(T<Tmax)
             size([NoiseX;NoiseY])
             paramsimulations = paramaux;
             
-            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);
+            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%from a,b,c to ws
             
             [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    

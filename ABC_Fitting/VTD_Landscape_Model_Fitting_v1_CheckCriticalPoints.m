@@ -50,8 +50,8 @@ else
         if nrealcriticpoints == 3
             condition1 = find(critpointsrewritten(vector,1).*critpointsrewritten(vector,2)>=0);
             if length(condition1)>=2
-                condition2 = length(find(critpointsrewritten(condition1,1)>0));
-                condition3 = length(find(critpointsrewritten(condition1,1)<0));
+                condition2 = length(find(critpointsrewritten(vector(condition1),1)>0));
+                condition3 = length(find(critpointsrewritten(vector(condition1),1)<0));
                 if (condition2>=1)&&(condition3>=1)
                 priorOK=1;
                 end

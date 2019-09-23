@@ -7,7 +7,8 @@ fatesmatrix = zeros(nmutants,times,NumClust);
 
 for mutantnumber = 1:nmutants
 
-    simulations(:,:,1+nsimulations*(mutantnumber-1):nsimulations*mutantnumber) = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates_EachMut(t0,dt,t1,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit(mutantnumber));
+    simulations(:,:,1+nsimulations*(mutantnumber-1):nsimulations*mutantnumber) =...
+        VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates_EachMut(t0,dt,t1,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit(mutantnumber));
     
 %     figure
 %     for time = 1:times

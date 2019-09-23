@@ -36,6 +36,7 @@ namedata = struc.namedata;
 
 %Model name:
 model = struc.model;%'Vulval_Development_v11';
+model = 'VTD_Landscape_Model_Fitting_v1';
 
 % ABC version:
 ABCversion = struc.ABCversion; %'ABC_SMC_Algorithm_OLCM_Template_v11_Fates_AbsDistance'
