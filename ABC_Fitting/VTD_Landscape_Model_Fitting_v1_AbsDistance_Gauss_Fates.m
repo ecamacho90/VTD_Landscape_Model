@@ -25,20 +25,24 @@ end
 %% ClusterData
 
     Data = reshape(simulations, [2,times*samples])';
-    size(Data)
-    figure
-    scatter(Data(:,1),Data(:,2),'filled')
+%     size(Data)
+%     figure
+%     scatter(Data(:,1),Data(:,2),'filled')
     
     gmfit = fitgmdist(Data, NumClust,'CovarianceType','full',...
         'SharedCovariance',false, 'Options',statset('MaxIter', 300), 'Start', Initial);
 
 %% Assign fates
     fatesaux = zeros(samples,times);
-  
+    Colors = [0 0 1; 0 1 0; 1 0 1; 0 1 1; 0 0 0; 1 0 0];
     for i=1:times
         fatesaux(:,i) = cluster(gmfit, squeeze(simulations(:,i,:))');
     end
-
+    figure
+    aux1=fatesaux';
+    aux= Colors(aux1(:),:);
+    scatter(Data(:,1),Data(:,2),2,aux,'filled');
+    pause();
     for mutantnumber = 1:nmutants
         
         for clusternumber = 1 :NumClust
@@ -51,3 +55,5 @@ end
 %% Compute distance
     
     distances = sum(squeeze(sum(abs(datamutants - fatesmatrix),2)),2);
+    
+end

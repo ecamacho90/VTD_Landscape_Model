@@ -56,7 +56,7 @@ pathtodata = struc.pathtodata;
 % Mutants to fit:
 mutantstofit = struc.mutantstofit;
 
-% Parameters to fit:
+% Parameters to fit (exclude those fixed):
 parfitnumbers = struc.parfitnumbers;
 
 % New threshold: (CHANGE)

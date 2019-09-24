@@ -47,8 +47,8 @@ measurement =1;
 %%%%%%%%%%%%%%%%%%%%%
 tic
 
-hold on
-Colors = {'b','r','n','g','y','m','k','w'};
+% hold on
+%Colors = {'b','r','n','g','y','m','k','w'};
 for mediachange = 1:nMediaChanges
 
    for timestep=(Mmediachanges(mediachange)+1):Mmediachanges(mediachange+1)
@@ -59,12 +59,12 @@ for mediachange = 1:nMediaChanges
         
         
     if t0+timestep*dt==measurement*12
-       disp(['measurement ', num2str(measurement+1)]);
+%       disp(['measurement ', num2str(measurement+1)]);
        simulateddata(:,measurement+1,:)=Xprev;
        measurement =measurement+1; 
-       scatter(Xprev(1,:),Xprev(2,:),'filled','MarkerFaceAlpha',0.2,'MarkerFaceColor',Colors{measurement})
-       title(num2str(t0+timestep*dt))
-       pause()
+%        scatter(Xprev(1,:),Xprev(2,:),'filled','MarkerFaceAlpha',0.2,'MarkerFaceColor',Colors{measurement})
+%        title(num2str(t0+timestep*dt))
+%        pause()
     end
 
    end

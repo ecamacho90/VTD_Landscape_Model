@@ -258,7 +258,7 @@ if T==0
 
             while (sublandscapen<5)&&(priorOK)
                 subparamaux = paramaux((3+(sublandscapen-1)*5):(2+(sublandscapen)*5));
-                subparamaux
+%                 subparamaux
 
                 %Compute critical points
                 [critpointsx,critpointsy] = feval(computecriticalpointshandle,subparamaux,x,y);
@@ -278,9 +278,9 @@ if T==0
             NoiseX = randn(M,nsimulations)*sqrt(2*paramaux(end)*dt); 
             NoiseY = randn(M,nsimulations)*sqrt(2*paramaux(end)*dt); 
             
-            figure('WindowStyle','docked');
-            hold on
-            scatter(InitialCondition(1,:),InitialCondition(2,:))
+%             figure('WindowStyle','docked');
+%             hold on
+%             scatter(InitialCondition(1,:),InitialCondition(2,:))
             
             size([NoiseX;NoiseY])
             paramsimulations = paramaux
@@ -289,7 +289,7 @@ if T==0
             
             [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
-            totaldistance = sum(distances./weightsdistances);
+            totaldistance = sum(distances'.*weightsdistances);%%
 
             %ACCEPT THE PARTICLE OR NOT DEPENDING ON THE DISTANCE:
             %-----------------------------------------------------
@@ -299,15 +299,12 @@ if T==0
                 N = N+1;
                 
                 %Save the data in the matrix:    
-                NewData = [NewData; paramaux, distances, totaldistance,1];
+                NewData = [NewData; paramaux, distances', totaldistance,1];
                 NewFates(:,:,:,N) = fatesmatrix;
                     
                 
-            end
-               
+            end           
         end
-
-
     end
     
     eltime=toc;
@@ -454,7 +451,7 @@ if (T>0)&(T<Tmax)
             
             [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
-            totaldistance = sum(distances./weightsdistances);
+            totaldistance = sum(distances'.*weightsdistances);
 
          
 
