@@ -34,10 +34,10 @@ if Mut==1
     Nmax = 10000;
 
     % Number of jobs max:
-    jobmax = 5000;
+    jobmax = 200;    %Each task will compute Nmax/jobmax particles
 
     % N jobs per batch:
-    njobsperbatch = 5;
+    njobsperbatch = 5; %There needs to be jobmax/njobsperbatch Parallel_function_... functions
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

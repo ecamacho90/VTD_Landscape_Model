@@ -1,8 +1,8 @@
-%% Parallel_call_function_5000
+% Parallel_call_function_10000
 % This script calls ABC_Algorithm in a parallel way so that the particles
 % are computed in parallel subsets.
 %% For loop
-function Parallel_function_VTD_AbsDist_Modelv5_v1_01()
+function Parallel_function_AbsDist_Modelv5_v1_016()
 %%
 %Here we fit a data set that has been simulated with a parameter vector
 %that we choose.
@@ -211,5 +211,4 @@ save(namenewdata)
 
 %You should have received a copy of the license along with this
 %work.  If not, see <https://creativecommons.org/licenses/by-nc-sa/4.0/>.
-
 
