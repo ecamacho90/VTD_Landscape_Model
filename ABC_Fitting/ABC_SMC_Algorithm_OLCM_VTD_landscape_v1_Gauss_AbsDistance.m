@@ -92,7 +92,7 @@ npar = 27;
 nparfit = length(parfitnumbers);
 
 %Initial parameters:
-initpar = [0,   1,   -9, 4.5, -3,  -20, 7 , 1, -11.5, -3, 12, 3 ,  0, 4, -3,  -26, -22 ,  2, -9, -3,  1, -23, 24, 1, 0.03, 0.03, 0.2];
+initpar = [0,   1,   -9, 4.5, -3,  -20, 7 , -8, -7, -3, 8, 10 ,  -8, -3, -3,  -18, -12 ,  -6, -13, -3,  -17, -35, 24, 1, 0.03, 0.03, 0.2];
 
 %Initial condition:
 y0 = [-8 3]';
@@ -170,7 +170,9 @@ checkcriticalpointshandle = str2func(strcat(model,'_CheckCriticalPoints'));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               SAMPLER T=0
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
+  paramaux = initpar;
+  parfitnumbersi = parfitnumbers;
+  sublandscapefit = 1:4;
 if T==0
     
     tic
@@ -218,35 +220,47 @@ if T==0
         %Sample parameter values:
         %------------------------
             
-        valuepriors = zeros(1,nparfit);
+     %   valuepriors = zeros(1,nparfit); %Meri:Not used
 
-        paramaux = initpar;
+      %  paramaux = initpar;
 
-        parami = 0;
+        %parami = 0;
+        parami = 1;%Meri
+        
+       % priorOK = 1;
 
-        priorOK = 1;
+        %while (parami<nparfit)%%&&(priorOK)%Meri  %Only if priorOK is not 0 and parami<npar the while loop will stop
+        while (parami<numel(parfitnumbersi))
+            %parami = parami+1;%Meri
 
-        while (parami<nparfit)&&(priorOK)  %Only if priorOK is not 0 and parami<npar the while loop will stop
-
-            parami = parami+1;
-
-            paramifit = parfitnumbers(parami); %Parameter number
+            paramifit = parfitnumbersi(parami); %Parameter number
 
             provparvalue = feval(priorshandle,paramifit); %Sample a value
 
             priorOK = feval(constraintshandle,provparvalue,paramifit); %Check that is a valid value
-
-            paramaux(paramifit) = provparvalue; %Save the value
+            if rem(parami,4)==0 %Modify if fitting c
+                priorOK = feval(relationsconstraintshandle1,paramaux);
+                if priorOK==0
+                   parami = parami-3; 
+                end
+            end
+            if priorOK %Meri 
+               parami = parami + 1; 
+               paramaux(paramifit) = provparvalue; %Save the value
+            else 
+                i=i+1;
+            end
+            
         end
             
         %Check that the parameters fulfill all the constraints:
         %------------------------------------------------------
         
-        if priorOK
-            
-            priorOK = feval(relationsconstraintshandle1,paramaux);
-            
-        end
+%         if priorOK
+%             
+%             priorOK = feval(relationsconstraintshandle1,paramaux);
+%             
+%         end
 
         %Check the sublandscapes have the correct number of critical pts:
         %----------------------------------------------------------------
@@ -254,9 +268,10 @@ if T==0
             disp('Constraint fulfilled')
             CheckParamConstraintsResult = CheckParamConstraintsResult +1;
             
-            sublandscapen = 1;
+           % sublandscapen = 1;
 
-            while (sublandscapen<5)&&(priorOK)
+            %while (sublandscapen<5)%&&(priorOK)
+            for sublandscapen=sublandscapefit
                 subparamaux = paramaux((3+(sublandscapen-1)*5):(2+(sublandscapen)*5));
 %                 subparamaux
 
@@ -265,13 +280,16 @@ if T==0
 
                 %Check that the lanscape has the desired number of critical points
                 priorOK = feval(checkcriticalpointshandle,critpointsx,critpointsy,sublandscapen,subparamaux);
-
-                sublandscapen = sublandscapen+1;
+                if priorOK
+                    parfitnumbersi = parfitnumbersi(parfitnumbersi<2+5*(sublandscapen-1)+1 | parfitnumbersi>2+5*(sublandscapen));
+                    sublandscapefit = sublandscapefit(sublandscapefit~=sublandscapen);
+                end
+                %sublandscapen = sublandscapen+1;
             end
         end
         
-        if priorOK
-            
+       % if priorOK
+        if numel(parfitnumbersi)==5    
             CheckLandscapesResult = CheckLandscapesResult+1;
             
             InitialCondition = repmat(y0,1,nsimulations)+randn(2,nsimulations)*sqrt(paramaux(end)); %This will be substituted by the solution coming from the LNA
@@ -282,7 +300,7 @@ if T==0
 %             hold on
 %             scatter(InitialCondition(1,:),InitialCondition(2,:))
             
-            size([NoiseX;NoiseY])
+            %size([NoiseX;NoiseY])
             paramsimulations = paramaux
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
@@ -304,6 +322,9 @@ if T==0
                     
                 
             end           
+            
+            parfitnumbersi = parfitnumbers;
+            sublandscapefit = 1:4;
         end
     end
     

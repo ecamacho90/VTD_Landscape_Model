@@ -4,7 +4,7 @@ function [distances,fatesmatrix] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Ga
 simulations = zeros(2,times,samples);
 fatesmatrix = zeros(nmutants,times,NumClust);
 
-
+tic
 for mutantnumber = 1:nmutants
 
     simulations(:,:,1+nsimulations*(mutantnumber-1):nsimulations*mutantnumber) =...
@@ -21,6 +21,7 @@ for mutantnumber = 1:nmutants
 %     end
 
 end
+toc
     
 %% ClusterData
 
@@ -34,15 +35,15 @@ end
 
 %% Assign fates
     fatesaux = zeros(samples,times);
-    Colors = [0 0 1; 0 1 0; 1 0 1; 0 1 1; 0 0 0; 1 0 0];
+  %  Colors = [0 0 1; 0 1 0; 1 0 1; 0 1 1; 0 0 0; 1 0 0];
     for i=1:times
         fatesaux(:,i) = cluster(gmfit, squeeze(simulations(:,i,:))');
     end
-    figure
-    aux1=fatesaux';
-    aux= Colors(aux1(:),:);
-    scatter(Data(:,1),Data(:,2),2,aux,'filled');
-    pause();
+%     figure
+%     aux1=fatesaux';
+%     aux= Colors(aux1(:),:);
+%     scatter(Data(:,1),Data(:,2),2,aux,'filled');
+%     pause();
     for mutantnumber = 1:nmutants
         
         for clusternumber = 1 :NumClust

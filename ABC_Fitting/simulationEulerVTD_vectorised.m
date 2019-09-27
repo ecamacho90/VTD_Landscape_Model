@@ -45,7 +45,7 @@ measurement =1;
 %%%%%%%%%%%%%%%%%%%%%
 % COMPETENCE:
 %%%%%%%%%%%%%%%%%%%%%
-tic
+%tic
 
 % hold on
 %Colors = {'b','r','n','g','y','m','k','w'};
@@ -70,7 +70,7 @@ for mediachange = 1:nMediaChanges
    end
 
 end
-toc
+%toc
         
 %       %%%%%%%%%%%%%%%%%%%%%
 %       % POST - COMPETENCE:
