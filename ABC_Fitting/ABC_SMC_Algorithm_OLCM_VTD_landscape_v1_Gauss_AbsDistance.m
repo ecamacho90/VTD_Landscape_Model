@@ -509,7 +509,7 @@ if (T>0)&(T<Tmax)
 
 end
  
-if T==0
+
 save(['/dascratch/ec47/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
 reset(RandStream.getGlobalStream)
 
@@ -518,18 +518,7 @@ fileID = fopen(['/home/ec47/FilesThatRun.txt'],'a');
 fprintf(fileID,num2str(jobnum));
 fprintf(fileID,'\n');
 fclose(fileID);
-elseif T<Tmax
-    
-save(['/dascratch/ec47/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','streamnum','substreamnum','eltime','i')
-reset(RandStream.getGlobalStream)
 
-
-fileID = fopen(['/home/ec47/FilesThatRun.txt'],'a');
-fprintf(fileID,num2str(jobnum));
-fprintf(fileID,'\n');
-fclose(fileID);
-
-end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
