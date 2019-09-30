@@ -20,7 +20,7 @@ if Mut==1
 
     namedata = {'19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4'};
     
-    pathtodata = '/Users/elenacamachoaguilar/Documents/GitHub/VTD_Landscape_Model/ABC_Fitting';
+    pathtodata = '/home/meritxellsaez/elenadata';
     
     % Mutants to fit:
     mutantstofit = [1,2,3,4,5,6,7];
