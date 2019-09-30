@@ -222,7 +222,7 @@ if T==0
             
      %   valuepriors = zeros(1,nparfit); %Meri:Not used
 
-      %  paramaux = initpar;
+%        paramaux = initpar;
 
         %parami = 0;
         parami = 1;%Meri
@@ -301,7 +301,7 @@ if T==0
 %             scatter(InitialCondition(1,:),InitialCondition(2,:))
             
             %size([NoiseX;NoiseY])
-            paramsimulations = paramaux
+            paramsimulations = paramaux;
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
             
@@ -394,8 +394,8 @@ if (T>0)&(T<Tmax)
  
         %Computing the next particle:
         %-----------------------------
-        size(w0)
-        Nmax
+%         size(w0)
+%         Nmax
         particlenum = randsample(Nmax,1,true,w0);
 
         paramaux = PreviousData(particlenum,1:npar); %Sample a particle from the previous step and take the parameters that we are fitting
@@ -510,11 +510,11 @@ if (T>0)&(T<Tmax)
 end
  
 
-save(['/dascratch/ec47/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
+save(['/home/meritxellsaez/elenadata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
 reset(RandStream.getGlobalStream)
 
 
-fileID = fopen(['/home/ec47/FilesThatRun.txt'],'a');
+fileID = fopen('/home/meritxellsaez/elenadata/FilesThatRun.txt','a');
 fprintf(fileID,num2str(jobnum));
 fprintf(fileID,'\n');
 fclose(fileID);

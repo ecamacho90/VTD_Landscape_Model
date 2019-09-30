@@ -12,8 +12,8 @@ functionname = mfilename();
 struc = Call_Parallel_function_VTD_AbsDist_Modelv1_v1(1,str2double(functionname((end-2):end)));
 
 %%  START RUNNING FROM HERE
-% clear all
-% struc = Call_Parallel_function_VTD_AbsDist_Modelv1_v1(1,1);
+clear all
+struc = Call_Parallel_function_VTD_AbsDist_Modelv1_v1(1,1);
 %%
 
 % Number of parallel computations:
@@ -122,15 +122,15 @@ end
 %%
 % Create job in cluster:
 
-p = parcluster('local');
-Jobs = createJob(p);
+% p = parcluster('local');
+% Jobs = createJob(p);
 
 % Loop to call jobs
 for jobnum = 1%jobsvector
     
-%     ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
+    ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
                                                              
-   createTask(Jobs,str2func(ABCversion),0,{mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum});
+%    createTask(Jobs,str2func(ABCversion),0,{mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum});
   
    disp(['Job ',num2str(jobnum),' created']);
 end

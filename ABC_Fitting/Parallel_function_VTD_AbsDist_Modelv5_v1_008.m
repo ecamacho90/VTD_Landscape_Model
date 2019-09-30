@@ -126,7 +126,7 @@ p = parcluster('local');
 Jobs = createJob(p);
 
 % Loop to call jobs
-for jobnum = 1%jobsvector
+for jobnum = jobsvector
     
 %     ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
                                                              

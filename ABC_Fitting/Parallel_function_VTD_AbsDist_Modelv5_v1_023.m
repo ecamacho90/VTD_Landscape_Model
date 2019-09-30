@@ -2,7 +2,7 @@
 % This script calls ABC_Algorithm in a parallel way so that the particles
 % are computed in parallel subsets.
 %% For loop
-function Parallel_function_AbsDist_Modelv5_v1_023()
+function Parallel_function_VTD_AbsDist_Modelv5_v1_023()
 %%
 %Here we fit a data set that has been simulated with a parameter vector
 %that we choose.
@@ -126,7 +126,7 @@ p = parcluster('local');
 Jobs = createJob(p);
 
 % Loop to call jobs
-for jobnum = 1%jobsvector
+for jobnum = jobsvector
     
 %     ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
                                                              
