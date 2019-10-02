@@ -1,5 +1,7 @@
-function [distances,fatesmatrix] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,datamutants,NumClust,Initial)
+function [distances,fatesmatrix,errorcatched,paramcatched] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,datamutants,NumClust,Initial)
 
+errorcatched = 0;
+paramcatched = [];
 
 simulations = zeros(2,times,samples);
 fatesmatrix = zeros(nmutants,times,NumClust);
@@ -35,7 +37,9 @@ toc
     catch
        distances = 100*ones(7,1);
        fatesmatrix = [];
-       disp(['Error in Gauss distribution for parameters ', num2str(paramsimulations)]);
+       errorcatched = 1;
+       paramcatched = paramsimulations;
+%        disp(['Error in Gauss distribution for parameters ', num2str(paramsimulations)]);
        return;     
     end
 

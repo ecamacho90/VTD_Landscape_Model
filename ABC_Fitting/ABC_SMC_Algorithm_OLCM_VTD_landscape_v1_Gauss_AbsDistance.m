@@ -106,6 +106,9 @@ nmutants = length(mutantstofit);
 
 %Samples 
 samples = nsimulations*nmutants;
+
+%Parameters that give an error in gm:
+errorparams = [];
     
 %Load data for clustering:
 if NoClassifiedOption
@@ -305,13 +308,13 @@ if T==0
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
             
-            [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
+            [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
             totaldistance = sum(distances'.*weightsdistances);%%
 
             %ACCEPT THE PARTICLE OR NOT DEPENDING ON THE DISTANCE:
             %-----------------------------------------------------
-            if totaldistance<=newEpT
+            if (errorcatched==0)&&(totaldistance<=newEpT)
 
                 %Count that a new particle has been found:
                 N = N+1;
@@ -320,8 +323,10 @@ if T==0
                 NewData = [NewData; paramaux, distances', totaldistance,1];
                 NewFates(:,:,:,N) = fatesmatrix;
                     
+            elseif errorcatched
+                errorparam = [errorparam;paramcatched];
                 
-            end           
+            end          
             
             parfitnumbersi = parfitnumbers;
             sublandscapefit = 1:4;
@@ -470,7 +475,7 @@ if (T>0)&(T<Tmax)
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%from a,b,c to ws
             
-            [distances,fatesmatrix] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
+            [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
             totaldistance = sum(distances'.*weightsdistances);
 
@@ -480,7 +485,7 @@ if (T>0)&(T<Tmax)
             %ACCEPT THE PARTCILE OR NOT DEPENDING ON THE DISTANCE:
             %-----------------------------------------------------
 
-            if totaldistance<=newEpT
+            if (errorcatched==0)&&totaldistance<=newEpT
 
                 %Count that a new particle has been found:
                 N = N+1;
@@ -498,7 +503,9 @@ if (T>0)&(T<Tmax)
                 
                 NewData = [NewData; paramaux, distances, totaldistance,w1];
                 NewFates(:,:,:,N) = fatesmatrix;
-                
+            
+            elseif errorcatched
+                errorparam = [errorparam;paramcatched];
             end
                
         end
@@ -511,7 +518,7 @@ end
  
 
 % save(['/cluster/elenameritxelldata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
-save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
+save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparam')
 reset(RandStream.getGlobalStream)
 
 
