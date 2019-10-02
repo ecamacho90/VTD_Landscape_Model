@@ -125,7 +125,7 @@ else
     load('DataProp180814_ClusteredDataNoThd.mat','DataToFit')
 end
 
-% save(['paramFatesM5v1_',num2str(jobnum)])
+save(['paramFatesM5v1_',num2str(jobnum)])
 
 
 %DON'T NEED TO CHANGE:
@@ -510,11 +510,12 @@ if (T>0)&(T<Tmax)
 end
  
 
-save(['/home/meritxellsaez/elenadata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
+% save(['/cluster/elenameritxelldata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
+save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i')
 reset(RandStream.getGlobalStream)
 
 
-fileID = fopen('/home/meritxellsaez/elenadata/FilesThatRun.txt','a');
+fileID = fopen('/cluster/elenameritxelldata/FilesThatRun.txt','a');
 fprintf(fileID,num2str(jobnum));
 fprintf(fileID,'\n');
 fclose(fileID);

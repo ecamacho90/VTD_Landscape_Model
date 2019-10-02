@@ -8,10 +8,10 @@
 #PBS -V 
 
 # redirect job?s standard output 
-#PBS -o /home/meritxellsaez/elenadata/ABCstdoutv5v1_032.txt 
+#PBS -o /cluster/elenameritxelldata/ABCstdoutv5v1_032.txt 
 
 # redirect job?s standard error 
-#PBS -e /home/meritxellsaez/elenadata/ABCstderrv5v1_032.txt 
+#PBS -e /cluster/elenameritxelldata/ABCstderrv5v1_032.txt 
 
 # maximum amount of real time that a job can be in the running state 
 #PBS -l walltime=100:00:00 
@@ -29,4 +29,4 @@
 #PBS -M ecamacho.90@gmail.com 
 
 # submit matlab job 
-matlab -nodisplay -r Parallel_function_VTD_AbsDist_Modelv5_v1_032>/home/meritxellsaez/elenadata/ABClogv5v1_0032.txt
+matlab -nodisplay -r Parallel_function_VTD_AbsDist_Modelv5_v1_032>/cluster/elenameritxelldata/ABClogv5v1_032.txt
