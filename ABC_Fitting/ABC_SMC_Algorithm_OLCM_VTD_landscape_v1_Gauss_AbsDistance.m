@@ -112,7 +112,7 @@ errorparams = [];
     
 %Load data for clustering:
 if NoClassifiedOption
-    load('DataProp180814_ClusteredDataWithThd.mat','DataToFit')
+    load('/cluster/elenameritxelldata/DataProp180814_ClusteredDataWithThd.mat','DataToFit')
     %Clustering parameters
     NumDims = 2;
     NumClust = 6;
@@ -125,10 +125,10 @@ if NoClassifiedOption
     Initial.ComponentProportion = (1./NumClust)*ones(1,NumClust);
     
 else
-    load('DataProp180814_ClusteredDataNoThd.mat','DataToFit')
+    load('/cluster/elenameritxelldata/DataProp180814_ClusteredDataNoThd.mat','DataToFit')
 end
 
-save(['paramFatesM5v1_',num2str(jobnum)])
+save(['/cluster/elenameritxelldata/paramFatesM5v1_',num2str(jobnum)])
 
 
 %DON'T NEED TO CHANGE:
