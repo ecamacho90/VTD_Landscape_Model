@@ -29,9 +29,15 @@ toc
 %     size(Data)
 %     figure
 %     scatter(Data(:,1),Data(:,2),'filled')
-    
-    gmfit = fitgmdist(Data, NumClust,'CovarianceType','full',...
-        'SharedCovariance',false, 'Options',statset('MaxIter', 300), 'Start', Initial);
+    try
+        gmfit = fitgmdist(Data, NumClust,'CovarianceType','full',...
+            'SharedCovariance',false, 'Options',statset('MaxIter', 300), 'Start', Initial);
+    catch
+       distances = 100*ones(7,1);
+       fatesmatrix = [];
+       disp(['Error in Gauss distribution for parameters ', num2str(paramsimulations)]);
+       return;     
+    end
 
 %% Assign fates
     fatesaux = zeros(samples,times);
