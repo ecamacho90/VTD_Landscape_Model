@@ -28,5 +28,5 @@
 # email address to receive the notifications 
 #PBS -M ecamacho.90@gmail.com 
 
-# submit matlab job 
+# submit matlab job
 matlab -nodisplay -r Parallel_function_VTD_AbsDist_Modelv5_v1_002>/cluster/elenameritxelldata/ABClogv5v1_002.txt

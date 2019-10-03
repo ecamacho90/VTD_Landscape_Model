@@ -113,7 +113,7 @@ errorparams = [];
 %Load data for clustering:
 if NoClassifiedOption
     load('/cluster/elenameritxelldata/DataProp180814_ClusteredDataWithThd.mat','DataToFit')
-    
+
 %Clustering parameters
     NumDims = 2;
     NumClust = 6;
@@ -311,6 +311,7 @@ if T==0
             
             [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
+            
             totaldistance = sum(distances'.*weightsdistances);%%
 
             %ACCEPT THE PARTICLE OR NOT DEPENDING ON THE DISTANCE:
@@ -325,6 +326,7 @@ if T==0
                 NewFates(:,:,:,N) = fatesmatrix;
                     
             elseif errorcatched
+                
                 errorparams = [errorparams;paramcatched];
 %                 disp('Error has been catched')
             end          
@@ -476,6 +478,7 @@ if (T>0)&(T<Tmax)
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%from a,b,c to ws
             
+            
             [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
                    
             totaldistance = sum(distances'.*weightsdistances);
@@ -519,7 +522,7 @@ end
  
 
 save(['/cluster/elenameritxelldata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparams')
-% save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparam')
+% save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparams')
 reset(RandStream.getGlobalStream)
 
 

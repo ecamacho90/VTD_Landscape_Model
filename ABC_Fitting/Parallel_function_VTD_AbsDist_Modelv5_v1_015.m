@@ -47,6 +47,9 @@ weightsdistances = struc.weightsdistances;
 %Path to data 
 pathtodata = struc.pathtodata;
 
+% % Add path:
+% addpath(pathtodata)
+
 % Variables
 
 %-----------------------
@@ -148,49 +151,6 @@ disp('Finished!')
 
 exit
 
-%%
-% Save the data:
-% 
-% load(namedata,'FatesMatrix')
-ParticlesMatrixaux = [];
-FatesMatrixaux = [];
-streamJobs = cell(1,jobmax);
-substreamJobs = cell(1,jobmax);
-
-for jobnum = 1:jobmax
-    
-    load([namenewdata,'_',num2str(jobnum)],'NewData','NewFates','streamnum','substreamnum')
-    
-    ParticlesMatrixaux = [ParticlesMatrixaux;NewData];
-    FatesMatrixaux = cat(4,FatesMatrixaux,NewFates);
-    streamJobs{jobnum} = streamnum;
-    substreamJobs{jobnum} = substreamnum;
-    
-    
-end
-
-%Normalise the weights:
-ParticlesMatrixaux(:,end) = ParticlesMatrixaux(:,end)/sum(ParticlesMatrixaux(:,end));
-%%
-%Save it in the cell of results:
-if T==0
-
-    ParticlesMatrix{1,1} = ParticlesMatrixaux;
-    FatesMatrix{1,1} = FatesMatrixaux;
-
-elseif T>0
-
-    ParticlesMatrix{1,T+1} = ParticlesMatrixaux;
-    FatesMatrix{1,T+1} = FatesMatrixaux;
-    
-end
-
-clear('ans')
-
-save(namenewdata)
-% 
-% disp('Data Saved')
-% exit
 
 
 

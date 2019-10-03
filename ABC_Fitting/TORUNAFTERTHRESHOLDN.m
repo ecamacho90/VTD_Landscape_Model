@@ -114,15 +114,17 @@ end
 % 
 load(namedata,'FatesMatrix')
 ParticlesMatrixaux = [];
+ErrorParamsaux = [];
 FatesMatrixaux = [];
 streamJobs = cell(1,jobmax);
 substreamJobs = cell(1,jobmax);
 
 for jobnum = 1:jobmax
     
-    load([namenewdata,'_',num2str(jobnum)],'NewData','NewFates','streamnum','substreamnum')
+    load([namenewdata,'_',num2str(jobnum)],'NewData','NewFates','streamnum','substreamnum','errorparams')
     
     ParticlesMatrixaux = [ParticlesMatrixaux;NewData];
+    ErrorParamsaux = [ErrorParamsaux;errorparams];
     FatesMatrixaux = cat(4,FatesMatrixaux,NewFates);
     streamJobs{jobnum} = streamnum;
     substreamJobs{jobnum} = substreamnum;
@@ -138,11 +140,13 @@ if T==0
 
     ParticlesMatrix{1,1} = ParticlesMatrixaux;
     FatesMatrix{1,1} = FatesMatrixaux;
+    ErrorParams{1,1} = ErrorParamsaux;
 
 elseif T>0
 
     ParticlesMatrix{1,T+1} = ParticlesMatrixaux;
     FatesMatrix{1,T+1} = FatesMatrixaux;
+    ErrorParams{1,T+1} = ErrorParamsaux;
     
 end
 
@@ -160,10 +164,11 @@ disp('Data Saved')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%20/01/16
+%03/10/19
 
 %v1: First version of ABC algorithm for VTD model.
 
+% Added command to save errorparams
 
 %Parallel_function_VTD_AbsDist_Modelv5_v1_01.m (c) by Elena Camacho Aguilar
 
