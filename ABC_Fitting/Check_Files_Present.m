@@ -17,5 +17,5 @@ for filenumber = 1:200
     
 end
 
-jobstorerun = unique(ceil(filesnotpresent/10));
+jobstorerun = unique(ceil(filesnotpresent/5));
 
