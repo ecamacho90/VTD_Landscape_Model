@@ -113,7 +113,8 @@ errorparams = [];
 %Load data for clustering:
 if NoClassifiedOption
     load('/cluster/elenameritxelldata/DataProp180814_ClusteredDataWithThd.mat','DataToFit')
-    %Clustering parameters
+    
+%Clustering parameters
     NumDims = 2;
     NumClust = 6;
     Initial.mu = [-10 5; -3 3; 3 -3; 3 3; -3 -3; 0 0];
@@ -324,8 +325,8 @@ if T==0
                 NewFates(:,:,:,N) = fatesmatrix;
                     
             elseif errorcatched
-                errorparam = [errorparam;paramcatched];
-                
+                errorparams = [errorparams;paramcatched];
+%                 disp('Error has been catched')
             end          
             
             parfitnumbersi = parfitnumbers;
@@ -505,7 +506,7 @@ if (T>0)&(T<Tmax)
                 NewFates(:,:,:,N) = fatesmatrix;
             
             elseif errorcatched
-                errorparam = [errorparam;paramcatched];
+                errorparams = [errorparams;paramcatched];
             end
                
         end

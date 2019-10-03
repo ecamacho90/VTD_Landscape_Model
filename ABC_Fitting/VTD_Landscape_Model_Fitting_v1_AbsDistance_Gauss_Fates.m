@@ -67,4 +67,5 @@ toc
     
     distances = sum(squeeze(sum(abs(datamutants - fatesmatrix),2)),2);
     
+    
 end
