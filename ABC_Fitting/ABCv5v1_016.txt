@@ -2,7 +2,7 @@
 #PBS -S /bin/bash 
 
 # name the job 
-#PBS -N ABC_016_v5_v1_30_09_19 
+#PBS -N ABC_v5_v1_30_09_19_0016 
 
 # use the submission environment 
 #PBS -V 

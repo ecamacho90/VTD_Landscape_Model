@@ -2,7 +2,7 @@
 #PBS -S /bin/bash 
 
 # name the job 
-#PBS -N ABC_002_v5_v1_30_09_19 
+#PBS -N ABC_v5_v1_30_09_19_002 
 
 # use the submission environment 
 #PBS -V 
@@ -28,5 +28,5 @@
 # email address to receive the notifications 
 #PBS -M ecamacho.90@gmail.com 
 
-# submit matlab job
+# submit matlab job 
 matlab -nodisplay -r Parallel_function_VTD_AbsDist_Modelv5_v1_002>/cluster/elenameritxelldata/ABClogv5v1_002.txt

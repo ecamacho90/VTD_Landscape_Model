@@ -11,12 +11,12 @@ function struc = Call_Parallel_function_VTD_AbsDist_Modelv1_v1(Mut,nbatch)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if Mut==1
 
-    EpTvector = [4];
+    EpTvector = [4,3.09];
 
     names = cell(1,1);
-    names{1} = {''};
+    names{1} = {'','_Eps3p09'};
 
-    loopept=1
+    loopept=2
 
     namedata = {'19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4'};
     

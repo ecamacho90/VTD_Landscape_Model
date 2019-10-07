@@ -110,7 +110,7 @@ if T==0
     
 else
     
-    load([pathtodata,namedata],'ParticlesMatrix')
+    load([pathtodata,'/',namedata],'ParticlesMatrix')
     PreviousData = ParticlesMatrix{1,T};
     
     %Compute the covariance matrix corresponding to each of the particles

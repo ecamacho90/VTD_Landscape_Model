@@ -110,7 +110,7 @@ if T==0
     
 else
     
-    load([pathtodata,namedata],'ParticlesMatrix')
+    load(['/Users/elenacamachoaguilar/Documents/GitHub/VTD_Landscape_Model/Cluster_Results/Workspaces_1','/',namedata],'ParticlesMatrix')
     PreviousData = ParticlesMatrix{1,T};
     
     %Compute the covariance matrix corresponding to each of the particles
@@ -131,7 +131,7 @@ end
 % Loop to call jobs
 for jobnum = 1%jobsvector
     
-    ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
+    ABC_SMC_Algorithm_OLCM_VTD_landscape_v1_Gauss_AbsDistance_toChe(mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum)
                                                              
 %    createTask(Jobs,str2func(ABCversion),0,{mutantstofit,parfitnumbers,EpT,T,Tmax,Nmax,Numberofparticleseachjob,PreviousData,namenewdata,CovarianceMatricesParticles,NoClassifiedOption,weightsdistances,streamnum,jobnum});
   
