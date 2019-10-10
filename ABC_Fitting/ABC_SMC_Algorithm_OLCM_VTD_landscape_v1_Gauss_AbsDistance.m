@@ -427,17 +427,19 @@ if (T>0)&(T<Tmax)
 
             provparvalue = newcomponentsparamaux(parami); %Take the parami component of the new candidate vector that contains the new values of the parameters that we are fitting.
             
-            priorOK = feval(evalpriorshandle,provparvalue,paramifit,minimumM); %We will have to change this so that it stops if we found one parameter which prior is 0
+            priorOK = feval(evalpriorshandle,provparvalue,paramifit); %We will have to change this so that it stops if we found one parameter which prior is 0
 
+            valuepriors(parami) = priorOK;
+            
             if priorOK
 
-            priorOK = feval(constraintshandle,provparvalue,paramifit,minimumM); %Check that is a valid value
+            priorOK = feval(constraintshandle,provparvalue,paramifit); %Check that is a valid value
 
             end
 
             paramaux(paramifit) = provparvalue;
 
-            valuepriors(parami) = priorOK;
+            
 
          end
          
@@ -505,7 +507,7 @@ if (T>0)&(T<Tmax)
 
                 w1 = prod(valuepriors)/denominator; %We multiply the priors of each component of the parameter vector to compute the value of the prior of the parameter vector
                 
-                NewData = [NewData; paramaux, distances, totaldistance,w1];
+                NewData = [NewData; paramaux, distances', totaldistance,w1];
                 NewFates(:,:,:,N) = fatesmatrix;
             
             elseif errorcatched
@@ -520,8 +522,11 @@ if (T>0)&(T<Tmax)
 
 end
  
-
+if T<2
 save(['/cluster/elenameritxelldata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparams')
+else
+save(['/cluster/elenameritxelldata/',namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','streamnum','substreamnum','eltime','i','errorparams')    
+end
 % save([namenewdata,'_',num2str(jobnum)],'newEpT','NewData','NewFates','CheckParamConstraintsResult','CheckLandscapesResult','streamnum','substreamnum','eltime','i','errorparams')
 reset(RandStream.getGlobalStream)
 

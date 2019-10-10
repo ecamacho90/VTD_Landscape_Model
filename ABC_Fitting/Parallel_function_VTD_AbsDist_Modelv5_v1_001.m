@@ -7,8 +7,8 @@ function Parallel_function_VTD_AbsDist_Modelv5_v1_001()
 %Here we fit a data set that has been simulated with a parameter vector
 %that we choose.
 functionname = mfilename();
-
-% Details for batch
+% 
+% % Details for batch
 struc = Call_Parallel_function_VTD_AbsDist_Modelv1_v1(1,str2double(functionname((end-2):end)));
 
 %%  START RUNNING FROM HERE
