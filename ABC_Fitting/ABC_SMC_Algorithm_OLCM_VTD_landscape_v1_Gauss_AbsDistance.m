@@ -234,7 +234,7 @@ if T==0
        % priorOK = 1;
 
         %while (parami<nparfit)%%&&(priorOK)%Meri  %Only if priorOK is not 0 and parami<npar the while loop will stop
-        while (parami<numel(parfitnumbersi))
+        while (parami<=numel(parfitnumbersi))
             %parami = parami+1;%Meri
 
             paramifit = parfitnumbersi(parami); %Parameter number
@@ -427,11 +427,11 @@ if (T>0)&(T<Tmax)
 
             provparvalue = newcomponentsparamaux(parami); %Take the parami component of the new candidate vector that contains the new values of the parameters that we are fitting.
             
-            priorOK = feval(evalpriorshandle,provparvalue,paramifit,minimumM); %We will have to change this so that it stops if we found one parameter which prior is 0
+            priorOK = feval(evalpriorshandle,provparvalue,paramifit); %We will have to change this so that it stops if we found one parameter which prior is 0
 
             if priorOK
 
-            priorOK = feval(constraintshandle,provparvalue,paramifit,minimumM); %Check that is a valid value
+            priorOK = feval(constraintshandle,provparvalue,paramifit); %Check that is a valid value
 
             end
 
