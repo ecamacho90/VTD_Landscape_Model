@@ -234,7 +234,7 @@ if T==0
        % priorOK = 1;
 
         %while (parami<nparfit)%%&&(priorOK)%Meri  %Only if priorOK is not 0 and parami<npar the while loop will stop
-        while (parami<numel(parfitnumbersi))
+        while (parami<=numel(parfitnumbersi))
             %parami = parami+1;%Meri
 
             paramifit = parfitnumbersi(parami); %Parameter number
