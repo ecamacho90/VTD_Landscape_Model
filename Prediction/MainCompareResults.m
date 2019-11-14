@@ -231,8 +231,31 @@ for i=1
 %     close all;
 end
 
+%%
+
+load('Predictions_7_Pulses1')
+
+FatesSummary = mean(NewFates,4);
+Conditions = {'12h pulses','24h pulses','12h pulses after 3.5','12h pulses after 4',...
+    '12h pulses after 3', '6h pulses after 2.5', '6h pulses after 2.75',  '6h pulses after 3',...
+    '3h pulses 12h -> 27h', '3h pulses 18h -> 33h','3h pulses 24h -> 39h',...
+    '3h pulses 30h -> 45h','3h pulses 36h -> 51h'};
+
+SaveName = {'12hPulses','24hPulses','12hPulses3p5','12hPulses4',...
+    '12hPulses3', '6hPulses2p5', '6hPulses2p75', '6hPulses3',...
+    '3hPulses12h27h', '3hPulses18h33h','3hPulses24h39h',...
+    '3hPulses30h45h','3hPulses36h51h'};
 
 
+for i=1:13
+figure;
+proportionsSim = squeeze(FatesSummary(i,:,:));
+colorMatWithValsG(proportionsSim);
+set(gca,'yticklabel',[2,2.5,3,3.5,4,4.5,5]);
+set(gca, 'FontSize',14);
+sgtitle(Conditions{i},'FontSize',18);
+saveas(gcf,[SaveName{i},'.png']);
+end
 
 
 

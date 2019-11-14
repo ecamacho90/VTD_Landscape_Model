@@ -5,24 +5,14 @@
 load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p07_Eps2p47_Eps2p10_Eps1p83_Eps1p56_Eps1p43.mat',...
    'ParticlesMatrixaux');
 
-%load(Predictions_7_Simulations.mat)
-% load('DataAll180814.mat','ClusteredDataWithThd');
-% DataToFit=ClusteredDataWithThd;
+load('DataAll180814.mat');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               CONSTANTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Set the stream of random number generators:
-%-------------------------------------------
 
-% reset(RandStream.getGlobalStream) %reset the random stream
-
-
-% cmrg = RandStream.create('mrg32k3a','NumStreams',100,'StreamIndices',streamnum);
-% RandStream.setGlobalStream(cmrg)
-% cmrg.Substream = substreamnum;
-
-numPart = 10;%size(ParticlesMatrixaux,1);
+numPart = size(ParticlesMatrixaux,1);
 
 %Time step:
 dt = 0.01;
@@ -40,7 +30,7 @@ times = t1/12+1;
 
 
 %Number of simulations:
-nsimulations = 100;%500;
+nsimulations = 500;
 
 %     1   2   3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
 %  p=[WNT,FGF,a0,b0,c0,u0,v0,a1,b1,c1,u1,v1,a2,b2,c2,u2,v2,a3,b3,c3,u3,v3,
@@ -58,7 +48,6 @@ model = 'VTD_Landscape_Model_Fitting_v1';
 
 %Number of mutants:
 %mutantstofit=1:11;
-%mutantstofit=[1,3,5,6,7,9,11,12,13,14,15,16,17,18,19];
 mutantstofit=[1,3,5,6,7,9,11];
 nmutants = length(mutantstofit);
 
@@ -71,9 +60,6 @@ Allsimulations = zeros(numPart,2,times,samples);
 %Parameters that give an error in gm:
 errorparams = [];
     
-%Load data for clustering:
-
-%    load('/cluster/elenameritxelldata/DataProp180814_ClusteredDataWithThd.mat','DataToFit')
 
 %Clustering parameters
     NumDims = 2;
@@ -100,6 +86,7 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates'));
     
     %Find the particles:
     %-------------------
+ %parfor i=1:numPart
  for i=1:numPart
             paramaux = Particles(i,:);
             paramsimulations = paramaux;
@@ -114,8 +101,8 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates'));
             
             [simulations,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial);
                    
-%             weights = 1./11*ones(11,1);
-%             totaldistance = sum(distances'*weights);%%
+%              weights = 1./11*ones(11,1);
+%              totaldistance = sum(distances'*weights);%%
 
                  if (errorcatched==0)
                 %Save the data in the matrix:    
@@ -129,5 +116,5 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates'));
     
  end
 
-%save('/cluster/meritxellsaez/Predictions_7_Simulations.mat','NewFates','NewData','errorparams','Allsimulations')
-save('Predictions_7_Simulations.mat','NewFates','NewData','errorparams','Allsimulations')
+%save('/cluster/meritxellsaez/Predictions_7_Simulations.mat','NewFates','NewData','errorparams','simDay2','simDay2p5','simDay3','simDay3p5','simDay4','simDay4p5','simDay5','-v7.3')
+save('Predictions_7_Simulations.mat','NewFates','NewData','errorparams','simDay2','simDay2p5','simDay3','simDay3p5','simDay4','simDay4p5','simDay5','-v7.3')
