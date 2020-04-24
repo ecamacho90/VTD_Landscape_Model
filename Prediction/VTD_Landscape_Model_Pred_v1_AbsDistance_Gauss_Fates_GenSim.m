@@ -1,16 +1,16 @@
-function [simulations,fatesmatrix,errorcatched,paramcatched] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates_PreSim(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial,OldData)
+function [simulations,fatesmatrix,errorcatched,paramcatched] = VTD_Landscape_Model_Pred_v1_AbsDistance_Gauss_Fates_GenSim(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial)
 
 errorcatched = 0;
 paramcatched = [];
 
-simulations = zeros(2,times,samples);
+simulations = zeros(2+5+3,times,samples);
 fatesmatrix = zeros(nmutants,times,NumClust);
 
 
 for mutantnumber = 1:nmutants
 
     simulations(:,:,1+nsimulations*(mutantnumber-1):nsimulations*mutantnumber) =...
-        VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates_EachMut(t0,dt,t1,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit(mutantnumber));
+        VTD_Landscape_Model_Pred_v1_AbsDistance_Gauss_Fates_EachMut_sim(t0,dt,t1,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit(mutantnumber));
     
 %     figure
 %     for time = 1:times
@@ -27,7 +27,7 @@ end
     
 %% ClusterData
 
-    Data = [reshape(simulations, [2,times*samples]),reshape(OldData, [2,size(OldData,2)*size(OldData,3)])]';
+    Data = reshape(simulations(1:2,:,:), [2,times*samples])';
 %     size(Data)
 %     figure
 %     scatter(Data(:,1),Data(:,2),'filled')
@@ -47,7 +47,7 @@ end
     fatesaux = zeros(samples,times);
   %  Colors = [0 0 1; 0 1 0; 1 0 1; 0 1 1; 0 0 0; 1 0 0];
     for i=1:times
-        fatesaux(:,i) = cluster(gmfit, squeeze(simulations(:,i,:))');
+        fatesaux(:,i) = cluster(gmfit, squeeze(simulations(1:2,i,:))');
     end
 %     figure
 %     aux1=fatesaux';

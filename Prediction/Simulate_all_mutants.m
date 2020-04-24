@@ -1,6 +1,9 @@
 
-load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p08_Eps2p47_Eps2p08_Eps1p78_Eps1p58_Eps1p46.mat',...
+load('/cluster/elenameritxelldata/19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p08_Eps2p47_Eps2p08_Eps1p78_Eps1p58_Eps1p46.mat',...
     'ParticlesMatrixaux');
+%load('/Users/meritxellsaez/Documents/Cluster_Results/19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p08_Eps2p47_Eps2p08_Eps1p78_Eps1p58_Eps1p46.mat',...
+%    'ParticlesMatrixaux');
+
 % load('DataAll180814.mat','ClusteredDataWithThd');
 % DataToFit=ClusteredDataWithThd;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -11,7 +14,7 @@ load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Ep
 %-------------------------------------------
 
 
-numPart = size(ParticlesMatrixaux,1);
+numPart = 100;%size(ParticlesMatrixaux,1);
 
 %Time step:
 dt = 0.01;
@@ -25,7 +28,7 @@ tspan=t0:dt:t1;
 M = (t1-t0)/dt;
 
 %Times
-times = t1/12+1;
+times = floor(t1/(10*dt)+1);%t1/12+1;
 
 
 %Number of simulations:
@@ -54,7 +57,7 @@ nmutants = length(mutantstofit);
 %Samples 
 samples = nsimulations*nmutants;
 
-Allsimulations = zeros(numPart,2,times,samples);
+Allsimulations = zeros(numPart,2+5+3,times,samples);
 
 %Parameters that give an error in gm:
 errorparams = [];
@@ -84,9 +87,11 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_GenSim'));
     NewData = zeros(numPart, 27);
     NewFates = zeros(nmutants,times,NumClust,numPart); %NewFates(i,j,k,m) is the proportion of cells in cluster k at time j in Experiment i when using particle m.
 
-    Particles = ParticlesMatrixaux(:,1:27);
+    PartToUse = randperm(size(ParticlesMatrixaux,1), numPart);
     
-    %Find the particles:
+    Particles = ParticlesMatrixaux(PartToUse,1:27);
+    
+    %simulate the particles:
     %-------------------
  parfor i=1:numPart
             paramaux = Particles(i,:);
@@ -116,14 +121,14 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_GenSim'));
                     
     
  end
-simDay2 = Allsimulations(:,:,1,:);
-simDay2p5 = Allsimulations(:,:,2,:);
-simDay3 = Allsimulations(:,:,3,:);
-simDay3p5 = Allsimulations(:,:,4,:);
-simDay4 = Allsimulations(:,:,5,:);
-simDay4p5 = Allsimulations(:,:,6,:);
-simDay5 = Allsimulations(:,:,7,:);
+Mut1 = Allsimulations(:,:,:,1:500);
+Mut2 = Allsimulations(:,:,:,501:1000);
+Mut3 = Allsimulations(:,:,:,1001:1500);
+Mut4 = Allsimulations(:,:,:,1501:2000);
+Mut5 = Allsimulations(:,:,:,2001:2501);
+Mut6 = Allsimulations(:,:,:,2501:3000);
+Mut7 = Allsimulations(:,:,:,3001:3500);
 
 
-save('/cluster/meritxellsaez/Predictions_7_Simulations.mat','NewFates','NewData','errorparams','simDay2','simDay2p5','simDay3','simDay3p5','simDay4','simDay4p5','simDay5','-v7.3')
-
+%save('Simulations_7_1.mat','NewFates','NewData','errorparams','Mut1','Mut2','Mut3','Mut4','Mut5','Mut6','Mut7','-v7.3')
+save('/cluster/meritxellsaez/Simulations_7_1000.mat','NewFates','NewData','errorparams','Mut1','Mut2','Mut3','Mut4','Mut5','Mut6','Mut7','-v7.3')

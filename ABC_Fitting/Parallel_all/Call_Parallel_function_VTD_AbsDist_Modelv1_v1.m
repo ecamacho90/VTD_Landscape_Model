@@ -14,13 +14,14 @@ if Mut==1
     EpTvector = [4,3.08];
 
     names = cell(1,1);
-    names{1} = {'','3.08'};
+    names{1} = {'','_Eps3p08'};
 
     loopept=2;
 
-    namedata = {'19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p08_'};
+    namedata = {'19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4'};
     
     pathtodata = '/cluster/elenameritxelldata';
+    
     
     % Mutants to fit:
     mutantstofit = [1,2,3,4,5,6,7];

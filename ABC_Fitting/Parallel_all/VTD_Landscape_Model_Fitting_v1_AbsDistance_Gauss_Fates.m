@@ -1,4 +1,4 @@
-function [simulations,fatesmatrix,errorcatched,paramcatched] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial)
+function [distances,fatesmatrix,errorcatched,paramcatched] = VTD_Landscape_Model_Fitting_v1_AbsDistance_Gauss_Fates(t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,datamutants,NumClust,Initial)
 
 errorcatched = 0;
 paramcatched = [];
@@ -6,7 +6,7 @@ paramcatched = [];
 simulations = zeros(2,times,samples);
 fatesmatrix = zeros(nmutants,times,NumClust);
 
-
+%tic
 for mutantnumber = 1:nmutants
 
     simulations(:,:,1+nsimulations*(mutantnumber-1):nsimulations*mutantnumber) =...
@@ -23,7 +23,7 @@ for mutantnumber = 1:nmutants
 %     end
 
 end
-
+%toc
     
 %% ClusterData
 
@@ -35,7 +35,7 @@ end
         gmfit = fitgmdist(Data, NumClust,'CovarianceType','full',...
             'SharedCovariance',false, 'Options',statset('MaxIter', 300), 'Start', Initial);
     catch
-       
+       distances = 100*ones(7,1);
        fatesmatrix = [];
        errorcatched = 1;
        paramcatched = paramsimulations;
@@ -62,6 +62,10 @@ end
         end
         
     end
-        
+    
+%% Compute distance
+    
+    distances = sum(squeeze(sum(abs(datamutants - fatesmatrix),2)),2);
+    
     
 end

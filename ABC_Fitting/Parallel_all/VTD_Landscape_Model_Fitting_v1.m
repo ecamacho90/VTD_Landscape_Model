@@ -24,13 +24,9 @@ elseif p(1)==0 && ChirTime<0 %If Chir off and ChirTime negative reduce
     if ChirTime>-0.01
         ChirTime=0;
     end
-elseif p(1)==1 && ChirTime>=0%If Chir on increase ChirTime
+elseif p(1)==1 %If Chir on increase ChirTime
     ChirFactor = ((ChirTime/p(23))^3)/(p(24)+(ChirTime/p(23))^3); %Parameters lambda and mu (2 parameters)
     ChirTime = ChirTime+dt; %Update Chir Time
-elseif p(1)==1 && ChirTime<0%If Chir on increase ChirTime
-    ChirTime = -ChirTime+dt;
-    ChirFactor = ((ChirTime/p(23))^3)/(p(24)+(ChirTime/p(23))^3); %Parameters lambda and mu (2 parameters)
-    ChirTime = ChirTime+dt;
 end
 
 

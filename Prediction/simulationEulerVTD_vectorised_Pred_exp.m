@@ -1,4 +1,4 @@
-function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
+function sol=simulationEulerVTD_vectorised_Pred_exp(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,7 +20,7 @@ function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialConditio
 
 
 %modeleq=str2func('VTD_Landscape_Model_Fitting_v1');
-modeleq=str2func('VTD_Landscape_Model_Fitting_v2');
+modeleq=str2func('VTD_Landscape_Model_Pred_exp');
 
 
 simulateddata = zeros(2,tF/12+1, nsimulations);
@@ -71,34 +71,7 @@ for mediachange = 1:nMediaChanges
    end
 
 end
-%toc
-        
-%       %%%%%%%%%%%%%%%%%%%%%
-%       % POST - COMPETENCE:
-%       %%%%%%%%%%%%%%%%%%%%%
-%     
-%         for timestep = 1:MPC
-% 
-%             dtfprev=modeleq(tF+(timestep-1)*dtPC,Xprev,pPC, dtPC, ChirTime);       %Evaluate f at the previous state
-% 
-%             Xprev=Xprev+dtPC*dtfprev+[NoiseXPC(simulation,timestep);NoiseYPC(simulation,timestep)];  %Renew the state taking an Euler Step
-%         
-% %             tspan = [ModelParam.tF+(timestep-1)*ModelParam.dt,ModelParam.tF+(timestep-0.5)*ModelParam.dt,ModelParam.tF+(timestep)*ModelParam.dt];   
-% %             [~, auxy]=ode45(@(t,y) modeleq(t,y,ModelParam.pPC),tspan, Xprev);            
-% %             Xprev = auxy(end,:)+ [ModelParam.NoiseX(simulation,timestep);ModelParam.NoiseY(simulation,timestep)]';
-% %            if rem(timestep,5)==0
-% %                 scatter(Xprev(1), Xprev(2),2,'m');
-% %            end
-%         end
-%                 simulateddata(:,mesurement+1+2,simulation)=Xprev';%[Xprev', computefates_signs(Xprev)];
-% 
-%         end
-        
-            
-        
 
-      
-% toc
 sol=simulateddata;
 
 

@@ -1,17 +1,23 @@
-
-load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p08_Eps2p47_Eps2p08_Eps1p78_Eps1p58_Eps1p46.mat',...
-    'ParticlesMatrixaux');
-% load('DataAll180814.mat','ClusteredDataWithThd');
-% DataToFit=ClusteredDataWithThd;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                               CONSTANTS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Set the stream of random number generators:
-%-------------------------------------------
+%Uses previoulsy computed simulations together with the new generated
+%points to compute the gaussian mixture used for clustering
 
 
-numPart = size(ParticlesMatrixaux,1);
+%load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p07_Eps2p47_Eps2p10_Eps1p83_Eps1p56_Eps1p43.mat',...
+%    'ParticlesMatrixaux');
+
+load('Predictions_7_Simulations.mat','NewData', 'simDay2','simDay2p5','simDay3','simDay3p5',...
+    'simDay4','simDay4p5','simDay5')
+
+
+OldData = cat(3,simDay2,simDay2p5,simDay3,simDay3p5,simDay4,simDay4p5,simDay5);
+clear simDay2 simDay2p5 simDay3 simDay3p5 simDay4 simDay4p5 simDay5;
+
+Particles = NewData;
+numPart = size(Particles,1);
+
+% Particles = Particles(1:numPart,:); %Run a smaller number of particles
+% OldData = OldData(1:numPart,:,:,:);
+
 
 %Time step:
 dt = 0.01;
@@ -46,15 +52,16 @@ model = 'VTD_Landscape_Model_Pred_v1';
 
 
 %Number of mutants:
-%mutantstofit=1:14;
-mutantstofit=[1,3,5,6,7,9,11];
+%mutantstofit=1:11;
+mutantstofit=21:40;
+%mutantstofit = setdiff(mutantstofit,[1,3,5,6,7,9,11]);
+%mutantstofit=[1,3,5,6,7,9,11];
 nmutants = length(mutantstofit);
 
 
 %Samples 
 samples = nsimulations*nmutants;
 
-Allsimulations = zeros(numPart,2,times,samples);
 
 %Parameters that give an error in gm:
 errorparams = [];
@@ -77,14 +84,14 @@ errorparams = [];
 
 
 %Distance function handle:
-distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_GenSim'));
+distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_PreSim'));
       
     %New cell in the particles matrix:
     %---------------------------------
     NewData = zeros(numPart, 27);
     NewFates = zeros(nmutants,times,NumClust,numPart); %NewFates(i,j,k,m) is the proportion of cells in cluster k at time j in Experiment i when using particle m.
 
-    Particles = ParticlesMatrixaux(:,1:27);
+    
     
     %Find the particles:
     %-------------------
@@ -100,7 +107,7 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_GenSim'));
             
             paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
             
-            [simulations,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial);
+            [~,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,NumClust,Initial, squeeze(OldData(1,:,:,:)));
                    
 %             weights = 1./11*ones(11,1);
 %             totaldistance = sum(distances'*weights);%%
@@ -109,21 +116,13 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_GenSim'));
                 %Save the data in the matrix:    
                     NewData(i,:) = paramaux;%, distances', totaldistance];
                     NewFates(:,:,:,i) = fatesmatrix;
-                    Allsimulations(i,:,:,:)=simulations;
+                    %Allsimulations(i,:,:,:)=simulations;
                  else
                      errorparams = [errorparams;paramcatched];
                  end
                     
     
  end
-simDay2 = Allsimulations(:,:,1,:);
-simDay2p5 = Allsimulations(:,:,2,:);
-simDay3 = Allsimulations(:,:,3,:);
-simDay3p5 = Allsimulations(:,:,4,:);
-simDay4 = Allsimulations(:,:,5,:);
-simDay4p5 = Allsimulations(:,:,6,:);
-simDay5 = Allsimulations(:,:,7,:);
 
-
-save('/cluster/meritxellsaez/Predictions_7_Simulations.mat','NewFates','NewData','errorparams','simDay2','simDay2p5','simDay3','simDay3p5','simDay4','simDay4p5','simDay5','-v7.3')
-
+save('/cluster/meritxellsaez/Predictions_7_21to40.mat','NewFates','errorparams', 'mutantstofit','-v7.3')
+%save('Predictions_7_New.mat','NewFates','NewData','errorparams','mutantstofit')

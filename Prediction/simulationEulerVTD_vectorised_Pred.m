@@ -1,4 +1,4 @@
-function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
+function sol=simulationEulerVTD_vectorised_Pred(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,7 +19,8 @@ function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialConditio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-modeleq=str2func('VTD_Landscape_Model_Fitting_v1');
+%modeleq=str2func('VTD_Landscape_Model_Fitting_v1');
+modeleq=str2func('VTD_Landscape_Model_Pred_v2');
 
 
 simulateddata = zeros(2,tF/12+1, nsimulations);

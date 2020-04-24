@@ -1,4 +1,4 @@
-function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
+function sol=simulationEulerVTD_vectorised_sim(t0,dt,tF,nsimulations,InitialCondition,nMediaChanges,Mmediachanges,pMediaChanges,NoiseX,NoiseY)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,10 +20,10 @@ function sol=simulationEulerVTD_vectorised(t0,dt,tF,nsimulations,InitialConditio
 
 
 %modeleq=str2func('VTD_Landscape_Model_Fitting_v1');
-modeleq=str2func('VTD_Landscape_Model_Fitting_v2');
+modeleq=str2func('VTD_Landscape_Model_Sim_v2');
 
 
-simulateddata = zeros(2,tF/12+1, nsimulations);
+simulateddata = zeros(2+5+3,floor(tF/10*dt+1), nsimulations);
 
                             
 % tic    
@@ -40,7 +40,8 @@ simulateddata = zeros(2,tF/12+1, nsimulations);
 ChirTime = 0;
 
 Xprev=InitialCondition;    %Set the initial point for each cell at the new simulation
-simulateddata(:,1,:)=InitialCondition;%[Xprev'], computefates_signs(Xprev)];
+simulateddata(1:2,1,:)=InitialCondition;%[Xprev'], computefates_signs(Xprev)];
+simulateddata(3:10,1,:)=repmat([pMediaChanges(1,3:7),0,1,0]',1,nsimulations);
 measurement =1;
              
 %%%%%%%%%%%%%%%%%%%%%
@@ -54,14 +55,14 @@ for mediachange = 1:nMediaChanges
 
    for timestep=(Mmediachanges(mediachange)+1):Mmediachanges(mediachange+1)
 
-       [dtfprev,ChirTime]=modeleq(t0+(timestep-1)*dt,Xprev,...
+       [dtfprev,ChirTime,params]=modeleq(t0+(timestep-1)*dt,Xprev,...
            pMediaChanges(mediachange,:),dt, ChirTime );       %Evaluate f at the previous state
         Xprev=Xprev+dt*dtfprev+[NoiseX(timestep,:);NoiseY(timestep,:)];  %Renew the state taking an Euler Step
         
         
-    if t0+timestep*dt==measurement*12
+    if rem(timestep,10)==0%t0+timestep*dt==measurement*12
 %       disp(['measurement ', num2str(measurement+1)]);
-       simulateddata(:,measurement+1,:)=Xprev;
+       simulateddata(:,measurement+1,:)=[Xprev;repmat(params',1,nsimulations)];
        measurement =measurement+1; 
 %        scatter(Xprev(1,:),Xprev(2,:),'filled','MarkerFaceAlpha',0.2,'MarkerFaceColor',Colors{measurement})
 %        title(num2str(t0+timestep*dt))
@@ -71,34 +72,7 @@ for mediachange = 1:nMediaChanges
    end
 
 end
-%toc
-        
-%       %%%%%%%%%%%%%%%%%%%%%
-%       % POST - COMPETENCE:
-%       %%%%%%%%%%%%%%%%%%%%%
-%     
-%         for timestep = 1:MPC
-% 
-%             dtfprev=modeleq(tF+(timestep-1)*dtPC,Xprev,pPC, dtPC, ChirTime);       %Evaluate f at the previous state
-% 
-%             Xprev=Xprev+dtPC*dtfprev+[NoiseXPC(simulation,timestep);NoiseYPC(simulation,timestep)];  %Renew the state taking an Euler Step
-%         
-% %             tspan = [ModelParam.tF+(timestep-1)*ModelParam.dt,ModelParam.tF+(timestep-0.5)*ModelParam.dt,ModelParam.tF+(timestep)*ModelParam.dt];   
-% %             [~, auxy]=ode45(@(t,y) modeleq(t,y,ModelParam.pPC),tspan, Xprev);            
-% %             Xprev = auxy(end,:)+ [ModelParam.NoiseX(simulation,timestep);ModelParam.NoiseY(simulation,timestep)]';
-% %            if rem(timestep,5)==0
-% %                 scatter(Xprev(1), Xprev(2),2,'m');
-% %            end
-%         end
-%                 simulateddata(:,mesurement+1+2,simulation)=Xprev';%[Xprev', computefates_signs(Xprev)];
-% 
-%         end
-        
-            
-        
 
-      
-% toc
 sol=simulateddata;
 
 

@@ -1,11 +1,12 @@
 %Uses previoulsy computed simulations together with the new generated
 %points to compute the gaussian mixture used for clustering
 
-
+pathInput = '/Users/meritxellsaez/Documents/Vertebrate_Trunk_Development/Cluster_Results';
 %load('19_09_12_7Mut_SENSITIVITYNEWPRIORS_ABCMv5v1_10000part_500sim_27par_Eps4_Eps3p07_Eps2p47_Eps2p10_Eps1p83_Eps1p56_Eps1p43.mat',...
 %    'ParticlesMatrixaux');
 
-load('Predictions_7_Simulations.mat','NewData', 'simDay2','simDay2p5','simDay3','simDay3p5',...
+%pathInput='.';
+load(fullfile(pathInput, 'Predictions_7_Simulations.mat'),'NewData', 'simDay2','simDay2p5','simDay3','simDay3p5',...
     'simDay4','simDay4p5','simDay5')
 
 
@@ -13,11 +14,11 @@ OldData = cat(3,simDay2,simDay2p5,simDay3,simDay3p5,simDay4,simDay4p5,simDay5);
 clear simDay2 simDay2p5 simDay3 simDay3p5 simDay4 simDay4p5 simDay5;
 
 Particles = NewData;
-numPart = size(Particles,1);
+numPart = 100; %size(Particles,1);
 
-% Particles = Particles(1:numPart,:); %Run a smaller number of particles
-% OldData = OldData(1:numPart,:,:,:);
-
+Particles = Particles(1:numPart,:); %Run a smaller number of particles
+OldData = OldData(1:numPart,:,:,:);
+ 
 
 %Time step:
 dt = 0.01;
@@ -35,7 +36,7 @@ times = t1/12+1;
 
 
 %Number of simulations:
-nsimulations = 500;
+nsimulations = 200;
 
 %     1   2   3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
 %  p=[WNT,FGF,a0,b0,c0,u0,v0,a1,b1,c1,u1,v1,a2,b2,c2,u2,v2,a3,b3,c3,u3,v3,
@@ -53,14 +54,17 @@ model = 'VTD_Landscape_Model_Pred_v1';
 
 %Number of mutants:
 %mutantstofit=1:11;
-mutantstofit=1:20;
-mutantstofit = setdiff(mutantstofit,[1,3,5,6,7,9,11]);
+
+%mutantstofit=60;
+
+%mutantstofit = setdiff(mutantstofit,[1,3,5,6,7,9,11]);
 %mutantstofit=[1,3,5,6,7,9,11];
-nmutants = length(mutantstofit);
+
+%nmutants = length(mutantstofit);
 
 
 %Samples 
-samples = nsimulations*nmutants;
+%samples = nsimulations*nmutants;
 
 
 %Parameters that give an error in gm:
@@ -83,18 +87,26 @@ errorparams = [];
     
 
 
-%Distance function handle:
+%%Distance function handle:
 distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_PreSim'));
       
-    %New cell in the particles matrix:
+    %% New cell in the particles matrix:
     %---------------------------------
+    
+    mutantstofit=[1 2 3 6 20 25 26 27 33 51];
+    nmutants = length(mutantstofit);
+    samples = nsimulations*nmutants;
+    
     NewData = zeros(numPart, 27);
     NewFates = zeros(nmutants,times,NumClust,numPart); %NewFates(i,j,k,m) is the proportion of cells in cluster k at time j in Experiment i when using particle m.
 
     
     
-    %Find the particles:
+    %%Find the particles:
     %-------------------
+    
+    
+    
  parfor i=1:numPart
             paramaux = Particles(i,:);
             paramsimulations = paramaux;
@@ -123,6 +135,25 @@ distancehandle = str2func(strcat(model,'_AbsDistance_Gauss_Fates_PreSim'));
                     
     
  end
+ 
+ FatesSummary = mean(NewFates,4);
+ %%
+%Conditions = {'CHIR 0.65', 'CHIR 0.65 2-3', 'CHIR 0.65 2-2.5','1 Pulse', '2 Pulses'};
+Conditions = {'No Chir', 'CHIR 2-2.5', 'CHIR 2-3', 'CHIR 2-5', '2 Pulses', 'CHIR 2-3 0.1', 'CHIR 2-3 0.3',...
+    'CHIR 2-3 0.5', 'CHIR 0.1', '1 Pulse'};
+%CondSave = {'SimCHIR0p65_2to5', 'SimCHIR0p65_2to3', 'SimCHIR0p65_2to2p5','Sim1PulseCHIR', 'Sim2PulsesCHIR'};
+CondSave = {'NoChir', 'CHIR2to2p5', 'CHIR2to3', 'CHIR2to5', '2PulsesCHIR', 'CHIR2to3CHIR0p1', 'CHIR2to3CHIR0p3',...
+    'CHIR2to30p5', 'CHIR0p1', '1PulseCHIR'};
 
-save('/cluster/meritxellsaez/Predictions_7_01to20.mat','NewFates','errorparams', 'mutantstofit','-v7.3')
+for i=1:numel(Conditions)
+   figure;
+   proportionsSim = squeeze(FatesSummary(i,:,:));
+   colorMatWithValsG(proportionsSim);
+   set(gca,'yticklabel',[2,2.5,3,3.5,4,4.5,5]);
+   set(gca, 'FontSize',14);
+   sgtitle(Conditions{i},'FontSize',18);
+   saveas(gcf, [CondSave{i},'.png'])
+end
+
+%save('/cluster/meritxellsaez/Predictions_7_21to40.mat','NewFates','errorparams', 'mutantstofit','-v7.3')
 %save('Predictions_7_New.mat','NewFates','NewData','errorparams','mutantstofit')
