@@ -315,7 +315,12 @@ if T==0
             paramsimulations = paramaux;
             
             
-            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
+            %paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%From a,b,c to ws
+            paramsimulations(3:7) = paramaux(3:7) + paramaux(13:17) - paramaux(18:22);
+            paramsimulations(8:12) = paramaux(8:12) - paramaux(3:7);
+            paramsimulations(13:17) = paramaux(18:22) - paramaux(8:12);
+            paramsimulations(18:22) = paramaux(18:22) - paramaux(13:17);
+                       
             paramsimulations(31:34) = [-9*paramaux(31)+10*paramaux(34), paramaux(32)-paramaux(31), 0,10*(paramaux(31)-paramaux(34))];
             
             [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);
@@ -487,9 +492,15 @@ if (T>0)&(T<Tmax)
             NoiseY = randn(M,nsimulations)*sqrt(2*paramaux(end)*dt); 
             
             size([NoiseX;NoiseY])
+            paramaux(33) = paramaux(32);
             paramsimulations = paramaux;
             
-            paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%from a,b,c to ws
+            %paramsimulations(8:22) = paramaux(8:22)-paramaux(3:17);%from a,b,c to ws
+            paramsimulations(3:7) = paramaux(3:7) + paramaux(13:17) - paramaux(18:22);
+            paramsimulations(8:12) = paramaux(8:12) - paramaux(3:7);
+            paramsimulations(13:17) = paramaux(18:22) - paramaux(8:12);
+            paramsimulations(18:22) = paramaux(18:22) - paramaux(13:17);
+            
             paramsimulations(31:34) = [-9*paramaux(31)+10*paramaux(34), paramaux(32)-paramaux(31), 0,10*(paramaux(31)-paramaux(34))];
             
             [distances,fatesmatrix,errorcatched,paramcatched] = feval(distancehandle,t0,dt,t1,times,samples,InitialCondition,nsimulations,paramsimulations,NoiseX,NoiseY,mutantstofit,nmutants,DataToFit,NumClust,Initial);

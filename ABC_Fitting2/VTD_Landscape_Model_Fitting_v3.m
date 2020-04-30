@@ -20,7 +20,7 @@ p(1)=min(ChirFactor+ p(1),1);
 mapped = zeros(6,1);
 
 %params x^2 xy y^2 x y
-mapped(1:5) = p(3:7) + p(1)*p(8:12)+ChirFactor*(p(13:17) + p(2)*p(18:22)); %20 parameters
+mapped(1:5) = p(3:7) + p(1)*p(8:12)+ChirFactor*p(13:17) + p(2)*p(18:22); %20 parameters
 mapped(6) =  p(31) + p(1)*p(32)+ChirFactor*p(33)+p(2)*p(34);   
 
 % mapped(1:5) = [-9, 4.5, -4, -20, 7] + p(1)*[1, -11.5, 2, 12, 3]+... %20 parameters
